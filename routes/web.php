@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PhoneController;
+use App\Models\Phone;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,6 +23,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('/notes', NoteController::class)->middleware(['auth']);
+Route::resource('/phones', PhoneController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';
