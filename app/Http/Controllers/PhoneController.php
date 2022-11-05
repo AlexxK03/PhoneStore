@@ -18,8 +18,9 @@ class PhoneController extends Controller
     public function index()
     {
         // Fetch in order of when they were last updated - latest updated returned first
-        // $phones = Phone::where('id', Auth::id())->latest('updated_at')->paginate(5);
-        $phones = Phone::paginate(5);
+        // $phones = Phone::where('id', Auth::id())->paginate(5);
+        $phones = Phone::latest('updated_at')->paginate(5);
+
 
         //  dd($phones);
         return view('phones.index')->with('phones', $phones);
@@ -41,8 +42,16 @@ class PhoneController extends Controller
             'name' => 'required|max:120',
             'brand' => 'required',
             'specs' => 'required',
-
+            'phone_image' => 'file|image',
         ]);
+        $phone_image = $request->file('phone_image');
+        $extention = $phone_image->getClientOriginalExtension();
+
+        $filename = date('d-m-Y') . '_' . $request->input('name'). '.' . $extention;
+
+        $path = $phone_image->storeAs('public/images', $filename);
+
+
 
         Phone::create([
             // Ensure you have the use statement for
@@ -133,8 +142,14 @@ class PhoneController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Phone $phone)
     {
-        //
+        if($phone->user_id != Auth::id()){
+            return abort(403);
+        }
+
+        $phone->delete();
+
+        return to_route('phones.index');
     }
 }

@@ -10,6 +10,7 @@
             <a href="{{ route('phones.create') }}" class="btn-link btn-lg mb-2">+ New Phone</a>
             @forelse ($phones as $phone)
                 <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
+                    <img src="{{asset('storage/images/' .$phone->phone_image) }}" width="150" />
                     <h2 class="font-bold text-2xl">
                        <a href="{{route('phones.show', $phone->uuid)}}">{{ $phone->name }}</a>
                     </h2>
