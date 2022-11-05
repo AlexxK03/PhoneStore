@@ -17,7 +17,8 @@
                         placeholder="name"
                         class="w-full"
                         autocomplete="off"
-                        :value="@old('name')"></x-text-input>
+                        :value="@old('name')">
+                    </x-text-input>
 
                         <x-text-input
                         type="text"
@@ -26,7 +27,17 @@
                         placeholder="brand"
                         class="w-full"
                         autocomplete="off"
-                        :value="@old('brand')"></x-text-input>
+                        :value="@old('brand')">
+                    </x-text-input>
+
+                    <x-textarea
+                        name="specs"
+                        rows="10"
+                        field="text"
+                        placeholder="Start typing here..."
+                        class="w-full mt-6"
+                        :value="@old('text')">
+                    </x-textarea>
 
                         <x-fileinput
                         type="file"
@@ -36,14 +47,6 @@
                         class="w-full"
                         autocomplete="off">
                         </x-fileinput>
-
-                    <x-textarea
-                        name="specs"
-                        rows="10"
-                        field="text"
-                        placeholder="Start typing here..."
-                        class="w-full mt-6"
-                        :value="@old('text')"></x-textarea>
 
                     <x-primary-button class="mt-6">Save Phone</x-primary-button>
                 </form>

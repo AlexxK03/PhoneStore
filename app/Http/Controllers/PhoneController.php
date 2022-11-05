@@ -58,7 +58,7 @@ class PhoneController extends Controller
             // Illuminate\Support\Str at the top of this file.
             'uuid' => Str::uuid(),
             'user_id' => Auth::id(),
-            'phone_image' => "phone_placeholder.jpg",
+            'phone_image' => $filename,
             'name' => $request->name,
             'brand' => $request->brand,
             'specs' => $request->specs
@@ -120,14 +120,14 @@ class PhoneController extends Controller
         }
 
         $request->validate([
-            'phone_image' => "phone_placeholder.jpg",
+            'phone_image' => 'required',
             'name' => 'required',
             'brand' => 'required',
             'specs' => 'required'
         ]);
 
         $phone->update([
-            'phone_image' => "phone_placeholder.jpg",
+            'phone_image' => $request->phone_image,
             'name' => $request->name,
             'brand' => $request->brand,
             'specs' => $request->specs
