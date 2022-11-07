@@ -4,13 +4,16 @@
             {{ __(' Edit Phone') }}
         </h2>
     </x-slot>
-
+{{-- Creates form for usere to fill out to edit an existing phone --}}
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
                 <form action="{{ route('phones.update', $phone) }}" method="post">
                     @method('put')
                     @csrf
+
+                 {{-- text input field component and attributes for the name field--}}
+
                     <x-text-input
                     type="text"
                     name="name"
@@ -19,6 +22,13 @@
                     class="w-full"
                     autocomplete="off"
                     :value="@old('name', $phone->name)"></x-text-input>
+                    {{-- Gets old data from the database and fills in input field --}}
+                    @error('name')
+                    <div class= "text-red-600 text-sm">{{$message}}</div>
+                @enderror
+
+                    {{-- text input field component and attributes for the brand field--}}
+
 
                     <x-text-input
                     type="text"
@@ -28,6 +38,13 @@
                     class="w-full"
                     autocomplete="off"
                     :value="@old('brand', $phone->brand)"></x-text-input>
+                    {{-- Gets old data from the database and fills in input field --}}
+                    @error('brand')
+                    <div class= "text-red-600 text-sm">{{$message}}</div>
+                @enderror
+
+                    {{-- text area input field component and attributes for the specs field--}}
+
 
                 <x-textarea
                     name="specs"
@@ -36,6 +53,10 @@
                     placeholder="Start typing here..."
                     class="w-full mt-6"
                     :value="@old('text', $phone->specs)"></x-textarea>
+                    {{-- Gets old data from the database and fills in input field --}}
+                    @error('specs')
+                    <div class= "text-red-600 text-sm">{{$message}}</div>
+                @enderror
 
                 <x-primary-button class="mt-6">Save Phone</x-primary-button>
                 </form>

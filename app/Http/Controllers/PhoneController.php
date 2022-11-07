@@ -10,52 +10,44 @@ use Illuminate\Http\Request;
 
 class PhoneController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         // Fetch in order of when they were last updated - latest updated returned first
-        // $phones = Phone::where('id', Auth::id())->paginate(5);
-        $phones = Phone::latest('updated_at')->paginate(5);
+        $phones = Phone::where('user_id', Auth::id())->latest('updated_at')->paginate(5);
 
+        // Gets phones, Authorizes what user is logged in and gets their phones. Displays them in latest updated order and shows
+        // five before moving onto the next paGE
 
-        //  dd($phones);
         return view('phones.index')->with('phones', $phones);
 
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-     return view ('phones.create');
+     return view ('phones.create'); // Shows phones.create page
     }
 
     public function store(Request $request)
     {
-        $request->validate([
+        $request->validate([             //Declares what fields need to be filled and if they are the required or not
             'name' => 'required|max:120',
             'brand' => 'required',
             'specs' => 'required',
             'phone_image' => 'file|image',
         ]);
-        $phone_image = $request->file('phone_image');
-        $extention = $phone_image->getClientOriginalExtension();
 
-        $filename = date('d-m-Y') . '_' . $request->input('name'). '.' . $extention;
+        $phone_image = $request->file('phone_image'); //declare phone image variable and what file to look in
 
-        $path = $phone_image->storeAs('public/images', $filename);
+        $extention = $phone_image->getClientOriginalExtension(); // returns file extension name (jpg, png etc.) from file name
+
+        $filename = date('d-m-Y') . '_' . $request->input('name'). '.' . $extention; //declares file name variable and format of file name to be displyed for images
+
+        $path = $phone_image->storeAs('public/images', $filename); // declares path and where to store images
 
 
 
-        Phone::create([
-            // Ensure you have the use statement for
-            // Illuminate\Support\Str at the top of this file.
+        Phone::create([  //attributes of what information stored for each phone in the database
             'uuid' => Str::uuid(),
             'user_id' => Auth::id(),
             'phone_image' => $filename,
@@ -68,35 +60,17 @@ class PhoneController extends Controller
         return to_route('phones.index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Phone $phone)
     {
-        if($phone->user_id != Auth::id()){
+        if($phone->user_id != Auth::id()){  //Veifies that desired phone was created by the logged in user
             return abort(403);
         }
 
        return view('phones.show')->with('phone', $phone);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Phone $phone)
+    public function edit(Phone $phone) //Veifies that desired phone was created by the logged in user
     {
         if($phone->user_id != Auth::id()){
             return abort(403);
@@ -105,17 +79,10 @@ class PhoneController extends Controller
        return view('phones.edit')->with('phone', $phone);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Phone $phone)
     {
 
-        if($phone->user_id != Auth::id()){
+        if($phone->user_id != Auth::id()){ //if phone is not under users id return 403 error screen
             return abort(403);
         }
 
@@ -136,19 +103,14 @@ class PhoneController extends Controller
         return to_route('phones.show', $phone)->with('success', 'Phone Updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Phone $phone)
     {
-        if($phone->user_id != Auth::id()){
+        if($phone->user_id != Auth::id()){ // verifies phone
             return abort(403);
         }
 
-        $phone->delete();
+        $phone->delete(); // deletes phone from database
 
         return to_route('phones.index');
     }
