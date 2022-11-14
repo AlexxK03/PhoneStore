@@ -14,6 +14,7 @@
 
                  {{-- text input field component and attributes for the name field--}}
 
+                 <p><strong>Name: </strong></p>
                     <x-text-input
                     type="text"
                     name="name"
@@ -29,7 +30,7 @@
 
                     {{-- text input field component and attributes for the brand field--}}
 
-
+                    <p><strong>Brand: </strong></p>
                     <x-text-input
                     type="text"
                     name="brand"
@@ -45,7 +46,7 @@
 
                     {{-- text area input field component and attributes for the specs field--}}
 
-
+                <p><strong>Specs: </strong></p>
                 <x-textarea
                     name="specs"
                     rows="10"
@@ -57,6 +58,19 @@
                     @error('specs')
                     <div class= "text-red-600 text-sm">{{$message}}</div>
                 @enderror
+
+                <p><strong>Image: </strong></p>
+                <x-fileinput
+                type="file"
+                name="phone_image"
+                field="phone_image"
+                placeholder="brand"
+                class="w-full"
+                autocomplete="off">
+                </x-fileinput>
+                @error('file')
+                <div class= "text-red-600 text-sm">{{$message}}</div>
+            @enderror
 
                 <x-primary-button class="mt-6">Save Phone</x-primary-button>
                 </form>
