@@ -23,6 +23,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::resource('/phones', PhoneController::class)->middleware(['auth']);
+require __DIR__ . '/auth.php';
 
-require __DIR__.'/auth.php';
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+
+Route::resource('/admin/phones', PhoneController::class)->middleware(['auth'])->names('admin.books');
+
+Route::resource('/user/phones', PhoneController::class)->middleware(['auth'])->names('user.books')->only(['index', 'show']);

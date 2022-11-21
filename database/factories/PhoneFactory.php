@@ -21,8 +21,8 @@ class PhoneFactory extends Factory
             'uuid' => $this->faker->uuid(),
             'brand' => $this->faker->word,
             'specs' => $this->faker->text(200),
-            'phone_image' => "phone_placeholder.jpg"
-            // 'user_id' => '1'
+            'phone_image' => "phone_placeholder.jpg",
+            'user_id' => '1'
 
 
 
