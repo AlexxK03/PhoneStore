@@ -19,7 +19,7 @@ class PhoneFactory extends Factory
         return [
             'name' => $this->faker->word,
             'uuid' => $this->faker->uuid(),
-            'brand' => $this->faker->word,
+            'brand_id' => '1',
             'specs' => $this->faker->text(200),
             'phone_image' => "phone_placeholder.jpg",
             'user_id' => '1'
