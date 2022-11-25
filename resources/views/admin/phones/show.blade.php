@@ -22,8 +22,8 @@
                     <strong>Updated at: </strong> {{ $phone->updated_at->diffForHumans() }}
                 </p>
             {{-- Edit and Delete buttons --}}
-                <a href="{{ route('phones.edit', $phone) }}" class="btn-link ml-auto">Edit phone</a>
-                <form action="{{ route('phones.destroy', $phone) }}" method="post">
+                <a href="{{ route('admin.phones.edit', $phone) }}" class="btn-link ml-auto">Edit phone</a>
+                <form action="{{ route('admin.phones.destroy', $phone) }}" method="post">
                     @method('delete')
                     @csrf
                     <button type="submit" class="btn btn-danger ml-4" onclick="return confirm('Are you sure you wish to delete this phone?')">Delete Phone</button>
