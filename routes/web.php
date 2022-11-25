@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\PhoneController;
+use App\Http\Controllers\Admin\PhoneController as AdminPhoneController;
+use App\Http\Controllers\User\PhoneController as UserPhoneController;
 use App\Models\Phone;
 use Illuminate\Support\Facades\Route;
 
@@ -19,15 +20,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.index');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('/admin/phones', PhoneController::class)->middleware(['auth'])->names('admin.books');
+Route::resource('/admin/phones', AdminPhoneController::class)->middleware(['auth'])->names('admin.phones');
 
-Route::resource('/user/phones', PhoneController::class)->middleware(['auth'])->names('user.books')->only(['index', 'show']);
+Route::resource('/user/phones', UserPhoneController::class)->middleware(['auth'])->names('user.phones')->only(['index', 'show']);

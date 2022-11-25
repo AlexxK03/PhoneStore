@@ -30,14 +30,16 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
+
         $user = Auth::user();
         $home = 'home';
-
         if ($user->hasRole('admin')) {
             $home = 'admin.phones.index';
         } else if ($user->hasRole('user')) {
             $home = 'user.phones.index';
         }
+
+
         return redirect()->route($home);
     }
 }
