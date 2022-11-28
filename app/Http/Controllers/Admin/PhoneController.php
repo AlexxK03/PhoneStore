@@ -23,13 +23,12 @@ class PhoneController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        $phones = Phone::with('brand')->get();
+        $phones = Phone::with('brand')->paginate(5);
 
         // Gets phones, Authorizes what user is logged in and gets their phones. Displays them in latest updated order and shows
         // five before moving onto the next paGE
 
         return view('admin.phones.index')->with('phones', $phones);
-
     }
 
     public function create()
@@ -37,7 +36,7 @@ class PhoneController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        return view ('admin.phones.create'); // Shows phones.create page
+        return view('admin.phones.create'); // Shows phones.create page
     }
 
     public function store(Request $request)
@@ -56,7 +55,7 @@ class PhoneController extends Controller
 
         $extention = $phone_image->getClientOriginalExtension(); // returns file extension name (jpg, png etc.) from file name
 
-        $filename = date('d-m-Y') . '_' . $request->input('name'). '.' . $extention; //declares file name variable and format of file name to be displyed for images
+        $filename = date('d-m-Y') . '_' . $request->input('name') . '.' . $extention; //declares file name variable and format of file name to be displyed for images
 
         $path = $phone_image->storeAs('public/images', $filename); // declares path and where to store images
 
@@ -85,7 +84,7 @@ class PhoneController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-       return view('admin.phones.show')->with('phone', $phone);
+        return view('admin.phones.show')->with('phone', $phone);
     }
 
     public function edit(Phone $phone) //Veifies that desired phone was created by the logged in user
@@ -97,7 +96,7 @@ class PhoneController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-       return view('admin.phones.edit')->with('phone', $phone);
+        return view('admin.phones.edit')->with('phone', $phone);
     }
 
     public function update(Request $request, Phone $phone)
