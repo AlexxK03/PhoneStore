@@ -24,13 +24,9 @@
 
                     {{-- text input field component and attributes for the brand field --}}
 
-                    <p><strong>Brand: </strong></p>
-                    <x-text-input type="text" name="brand" field="brand" placeholder="brand" class="w-full"
-                        autocomplete="off" :value="@old('brand', $phone->brand)"></x-text-input>
+
                     {{-- Gets old data from the database and fills in input field --}}
-                    @error('brand')
-                        <div class="text-red-600 text-sm">{{ $message }}</div>
-                    @enderror
+
 
                     {{-- text area input field component and attributes for the specs field --}}
 
@@ -47,6 +43,20 @@
                         class="w-full" autocomplete="off">
                     </x-fileinput>
                     @error('file')
+                        <div class="text-red-600 text-sm">{{ $message }}</div>
+                    @enderror
+
+                    <div class="form-group">
+                        <label for="brand">Brand:</label>
+                        <select name="brand_id">
+                            @foreach ($brands as $brand)
+                                <option value="@old{{ $brand->id }}"
+                                    {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                                    {{ $brand->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @error('brand')
                         <div class="text-red-600 text-sm">{{ $message }}</div>
                     @enderror
 

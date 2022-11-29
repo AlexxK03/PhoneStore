@@ -8,8 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Requests\StorePhoneRequest;
-
-
+use App\Models\Brand;
 
 class PhoneController extends Controller
 {
@@ -36,7 +35,9 @@ class PhoneController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        return view('admin.phones.create'); // Shows phones.create page
+
+        $brands = Brand::all();
+        return view('admin.phones.create')->with('brand', $brands); // Shows phones.create page
     }
 
     public function store(Request $request)
@@ -46,7 +47,7 @@ class PhoneController extends Controller
 
         $request->validate([             //Declares what fields need to be filled and if they are the required or not
             'name' => 'required|max:120',
-            'brand' => 'required',
+            'brand_id' => 'required',
             'specs' => 'required',
             'phone_image' => 'file|image',
         ]);
