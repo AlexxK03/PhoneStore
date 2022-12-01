@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\PhoneController as AdminPhoneController;
+use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\User\PhoneController as UserPhoneController;
 use App\Models\Phone;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +30,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('/admin/phones', AdminPhoneController::class)->middleware(['auth'])->names('admin.phones');
 
 Route::resource('/user/phones', UserPhoneController::class)->middleware(['auth'])->names('user.phones')->only(['index', 'show']);
+
+Route::resource('/admin/brands', AdminBrandController::class)->middleware(['auth'])->names('admin.brands');

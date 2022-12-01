@@ -94,10 +94,15 @@ class PhoneController extends Controller
         //     return abort(403);
         // }
 
+        $phones = Phone::with('brand')->paginate(5);
+        $brands = Brand::all();
+
+
+
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        return view('admin.phones.edit')->with('phone', $phone);
+        return view('admin.phones.edit')->with('brand', $brands)->with('phone', $phones);
     }
 
     public function update(Request $request, Phone $phone)
@@ -113,14 +118,14 @@ class PhoneController extends Controller
         $request->validate([
             'phone_image' => 'required',
             'name' => 'required',
-            'brand' => 'required',
+            'brand_id' => 'required',
             'specs' => 'required'
         ]);
 
         $phone->update([
             'phone_image' => $request->phone_image,
             'name' => $request->name,
-            'brand' => $request->brand,
+            'brand_id' => $request->brand_id,
             'specs' => $request->specs
         ]);
 

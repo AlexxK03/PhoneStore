@@ -18,7 +18,7 @@
                     <p class="mt-2">
                         <strong>Specs: </strong>{{ Str::limit($phone->specs, 200) }}
                     </p>
-                    <h3 class="font-bold text-1xl"><strong>Publisher Name</strong>{{ $phone->brand->name }}</h3>
+                    <h3 class="font-bold text-1xl"><strong>Brand: </strong>{{ $phone->brand->name }}</h3>
 
                     <span class="block mt-4 text-sm opacity-70">{{ $phone->updated_at->diffForHumans() }}</span>
                 </div>

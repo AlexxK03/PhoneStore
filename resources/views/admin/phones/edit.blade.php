@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <label for="brand">Brand:</label>
                         <select name="brand_id">
-                            @foreach ($brands as $brand)
+                            @foreach ($brand as $brand)
                                 <option value="@old{{ $brand->id }}"
                                     {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
                                     {{ $brand->name }}</option>

@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('home')">
                         {{ __('Phones') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('admin.brands.index')">
+                        {{ __('Brands') }}
+                    </x-nav-link>
                 </div>
             </div>
 
