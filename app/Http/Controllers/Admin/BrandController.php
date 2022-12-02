@@ -32,7 +32,11 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        $brands = Brand::all();
+        return view('admin.brands.create')->with('brands', $brands);
     }
 
     /**
@@ -43,7 +47,21 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        $request->validate([             //Declares what fields need to be filled and if they are the required or not
+            'name' => 'required|max:120',
+            'address' => 'required',
+        ]);
+
+        Brand::create([  //attributes of what information stored for each phone in the database
+            'name' => $request->name,
+            'address' => $request->specs
+
+        ]);
+
+        return to_route('admin.brands.index');
     }
 
     /**
@@ -114,13 +132,8 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy($id)
     {
-        $user = Auth::user();
-        $user->authorizeRoles('admin');
-
-        $brand->delete(); // deletes phone from database
-
-        return to_route('admin.brands.index');
+        //
     }
 }

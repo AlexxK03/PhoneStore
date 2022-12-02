@@ -42,4 +42,20 @@ class HomeController extends Controller
 
         return redirect()->route($home);
     }
+
+
+    public function brandindex(Request $request)
+    {
+
+        $user = Auth::user();
+        $home = 'home';
+        if ($user->hasRole('admin')) {
+            $home = 'admin.brands.index';
+        } else if ($user->hasRole('user')) {
+            $home = 'user.brands.index';
+        }
+
+
+        return redirect()->route($home);
+    }
 }

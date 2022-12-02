@@ -23,7 +23,6 @@ class PhoneController extends Controller
         $user->authorizeRoles('admin');
 
         $phones = Phone::with('brand')->paginate(5);
-
         // Gets phones, Authorizes what user is logged in and gets their phones. Displays them in latest updated order and shows
         // five before moving onto the next paGE
 
