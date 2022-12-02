@@ -15,7 +15,7 @@
                             </strong>{{ $brand->name }}</a>
                     </h2>
                     <p class="mt-2">
-                        <strong>address: </strong>{{ Str::limit($brand->adress, 200) }}
+                        <strong>address: </strong>{{ $brand->address }}
                     </p>
 
                     <span class="block mt-4 text-sm opacity-70">{{ $brand->updated_at->diffForHumans() }}</span>

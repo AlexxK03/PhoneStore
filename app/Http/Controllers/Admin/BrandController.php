@@ -22,7 +22,7 @@ class BrandController extends Controller
 
         $brands = Brand::paginate(10);
 
-        return view('admin.brands.index')->with('brands',$brands);
+        return view('admin.brands.index')->with('brands', $brands);
     }
 
     /**
@@ -52,9 +52,16 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Brand $brand)
     {
-        //
+
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        // $brands = Brand::all();
+
+
+        return view('admin.brands.show')->with('brand', $brand);
     }
 
     /**
@@ -63,9 +70,16 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Brand $brand)
     {
-        //
+        $brands = Brand::all();
+
+
+
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        return view('admin.brands.edit')->with('brand', $brand);
     }
 
     /**
@@ -75,9 +89,23 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Brand $brand)
     {
-        //
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required'
+        ]);
+
+        $brand->update([
+            'name' => $request->name,
+            'address' => $request->address
+        ]);
+
+        return to_route('admin.brands.show', $brand)->with('success', 'Brand Updated successfully');
     }
 
     /**
@@ -86,8 +114,13 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Brand $brand)
     {
-        //
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        $brand->delete(); // deletes phone from database
+
+        return to_route('admin.brands.index');
     }
 }
