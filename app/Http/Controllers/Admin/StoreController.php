@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Store;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class StoreController extends Controller
 {
@@ -14,7 +18,12 @@ class StoreController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        $stores = Store::paginate(3);
+
+        return view('admin.stores.index')->with('stores', $stores);
     }
 
     /**
@@ -24,7 +33,6 @@ class StoreController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -44,9 +52,12 @@ class StoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Store $store)
     {
-        //
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        return view('admin.stores.show')->with('store', $store);
     }
 
     /**

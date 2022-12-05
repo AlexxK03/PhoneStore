@@ -58,4 +58,19 @@ class HomeController extends Controller
 
         return redirect()->route($home);
     }
+
+    public function storeindex(Request $request)
+    {
+
+        $user = Auth::user();
+        $home = 'home';
+        if ($user->hasRole('admin')) {
+            $home = 'admin.stores.index';
+        } else if ($user->hasRole('user')) {
+            $home = 'user.stores.index';
+        }
+
+
+        return redirect()->route($home);
+    }
 }

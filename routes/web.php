@@ -30,6 +30,7 @@ require __DIR__ . '/auth.php';
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home/brands', [App\Http\Controllers\HomeController::class, 'brandindex'])->name('home.brands.index');
+Route::get('/home/stores', [App\Http\Controllers\HomeController::class, 'storeindex'])->name('home.stores.index');
 
 
 Route::resource('/admin/phones', AdminPhoneController::class)->middleware(['auth'])->names('admin.phones');
@@ -38,4 +39,8 @@ Route::resource('/user/phones', UserPhoneController::class)->middleware(['auth']
 
 Route::resource('/admin/brands', AdminBrandController::class)->middleware(['auth'])->names('admin.brands');
 
-Route::resource('/user/brands', UserBrandController::class)->middleware(['auth'])->names('user.brands');
+Route::resource('/user/brands', UserBrandController::class)->middleware(['auth'])->names('user.brands')->only(['index', 'show']);;
+
+Route::resource('/admin/stores', AdminStoreController::class)->middleware(['auth'])->names('admin.stores');
+
+Route::resource('/user/stores', UserStoreController::class)->middleware(['auth'])->names('user.stores');
