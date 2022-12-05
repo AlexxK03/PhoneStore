@@ -12,14 +12,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
                     <x-nav-link :href="route('home')">
                         {{ __('Phones') }}
                     </x-nav-link>
                     <x-nav-link :href="route('home.brands.index')" :active="request()->routeIs('home.brands.index')">
                         {{ __('Brands') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('home.brands.index')" :active="request()->routeIs('home.brands.index')">
+                        {{ __('Stores') }}
                     </x-nav-link>
                 </div>
             </div>

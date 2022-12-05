@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Admin\PhoneController as AdminPhoneController;
 use App\Http\Controllers\Admin\BrandController as AdminBrandController;
+use App\Http\Controllers\Admin\StoreController as AdminStoreController;
 use App\Http\Controllers\User\PhoneController as UserPhoneController;
 use App\Http\Controllers\User\BrandController as UserBrandController;
+use App\Http\Controllers\User\StoreController as UserStoreController;
 use App\Models\Phone;
 use Illuminate\Support\Facades\Route;
 

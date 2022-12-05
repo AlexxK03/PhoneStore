@@ -39,14 +39,21 @@
                     @enderror
 
                     <div class="form-group">
-                        <label for="brand">Brand:</label>
+                        <label for="brand"><strong>Brand: </strong><br></label>
                         <select name="brand_id">
-                            @foreach ($brand as $brand) 
+                            @foreach ($brand as $brand)
                                 <option value="{{ $brand->id }}"
                                     {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
                                     {{ $brand->name }}</option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="stores"><strong>Stores: </strong><br></label>
+                        @foreach ($stores as $store)
+                            <input type="checkbox", value="{{ $store->id }}" name="stores[]"> {{ $store->name }}
+                        @endforeach
                     </div>
 
                     <x-primary-button class="mt-6">Save Phone</x-primary-button>

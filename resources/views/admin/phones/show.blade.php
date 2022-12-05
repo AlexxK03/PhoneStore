@@ -42,6 +42,9 @@
                 <div>
                     <p class="mt-6 whitespace-pre-wrap"> <strong> Brand:</strong> {{ $phone->brand->name }}</p>
                     <p class="mt-6 whitespace-pre-wrap"> <strong> Specs:</strong> {{ $phone->specs }}</p>
+                    @foreach ($phone->stores as $store)
+                        <p class="mt-6 whitespace-pre-wrap"> <strong> Available in:</strong> {{ $store->name }}
+                    @endforeach
                 </div>
 
 

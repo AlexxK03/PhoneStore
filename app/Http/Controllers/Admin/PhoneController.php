@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Phone;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -22,7 +23,10 @@ class PhoneController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        $phones = Phone::with('brand')->paginate(5);
+        $phones = Phone::with('brand')
+            ->with('stores')
+            ->latest('updated_at')
+            ->paginate(5);
         // Gets phones, Authorizes what user is logged in and gets their phones. Displays them in latest updated order and shows
         // five before moving onto the next paGE
 
@@ -36,7 +40,9 @@ class PhoneController extends Controller
 
 
         $brands = Brand::all();
-        return view('admin.phones.create')->with('brand', $brands); // Shows phones.create page
+        $stores = Store::all();
+
+        return view('admin.phones.create')->with('brand', $brands)->with('stores', $stores); // Shows phones.create page
     }
 
     public function store(Request $request)
@@ -49,6 +55,7 @@ class PhoneController extends Controller
             'brand_id' => 'required',
             'specs' => 'required',
             'phone_image' => 'file|image',
+            'stores' => ['required', 'exists:stores,id']
         ]);
 
         $phone_image = $request->file('phone_image'); //declare phone image variable and what file to look in
@@ -61,15 +68,19 @@ class PhoneController extends Controller
 
 
 
-        Phone::create([  //attributes of what information stored for each phone in the database
+        $phone = Phone::create([  //attributes of what information stored for each phone in the database
             'uuid' => Str::uuid(),
             'user_id' => Auth::id(),
             'phone_image' => $filename,
             'name' => $request->name,
-            'brand' => $request->brand,
+            'brand_id' => $request->brand_id,
             'specs' => $request->specs
 
+
         ]);
+
+        $phone->stores()->attach($request->stores);
+
 
         return to_route('admin.phones.index');
     }
