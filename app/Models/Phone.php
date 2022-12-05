@@ -20,4 +20,8 @@ class Phone extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    public function stores(){
+        return $this->belongsToMany(Store::class)->withTimestamps();
+    }
 }
