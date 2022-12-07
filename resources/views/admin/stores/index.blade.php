@@ -15,7 +15,7 @@
                             </strong>{{ $store->name }}</a>
                     </h2>
                     <p class="mt-2">
-                        <strong>store: </strong>{{ $store->address }}
+                        <strong>address: </strong>{{ $store->address }}
                     </p>
 
                     <span class="block mt-4 text-sm opacity-70">{{ $store->updated_at->diffForHumans() }}</span>
@@ -24,7 +24,7 @@
             @empty
                 <p>You have no stores yet.</p>
             @endforelse
-            {{ $stores->links() }}
+            {{-- {{ $stores->links() }} --}}
         </div>
     </div>
 </x-app-layout>

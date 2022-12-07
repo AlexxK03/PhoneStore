@@ -9,6 +9,9 @@ class Store extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
+
     public function phones()
     {
         return $this->belongsToMany(Phone::class)->withTimestamps();

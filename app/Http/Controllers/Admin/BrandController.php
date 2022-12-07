@@ -57,7 +57,7 @@ class BrandController extends Controller
 
         Brand::create([  //attributes of what information stored for each phone in the database
             'name' => $request->name,
-            'address' => $request->specs
+            'address' => $request->address
 
         ]);
 

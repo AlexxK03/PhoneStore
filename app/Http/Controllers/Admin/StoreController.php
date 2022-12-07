@@ -21,7 +21,8 @@ class StoreController extends Controller
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        $stores = Store::paginate(3);
+        $stores = Store::all();
+        // $stores = Store::paginate(3);
 
         return view('admin.stores.index')->with('stores', $stores);
     }
@@ -33,6 +34,11 @@ class StoreController extends Controller
      */
     public function create()
     {
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        $stores = Store::all();
+        return view('admin.stores.create')->with('stores', $stores);
     }
 
     /**
@@ -43,7 +49,22 @@ class StoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required',
+
+        ]);
+
+        Store::create([
+            'name' => $request->name,
+            'address' => $request->address
+
+        ]);
+
+        return to_route('admin.stores.index');
     }
 
     /**
@@ -66,9 +87,15 @@ class StoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Store $store)
     {
-        //
+
+
+
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        return view('admin.stores.edit')->with('store', $store);
     }
 
     /**
@@ -78,9 +105,22 @@ class StoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Store $store)
     {
-        //
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        $request->validate([
+            'name' => 'required',
+            'address' => 'required'
+        ]);
+
+        $store->update([
+            'name' => $request->name,
+            'address' => $request->address
+        ]);
+
+        return to_route('admin.stores.show', $store)->with('success', 'Store Updated successfully');
     }
 
     /**
