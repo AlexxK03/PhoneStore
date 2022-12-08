@@ -98,14 +98,15 @@ class PhoneController extends Controller
         return view('admin.phones.show')->with('phone', $phone);
     }
 
-    public function edit(Phone $phone) //Veifies that desired phone was created by the logged in user
+    public function edit(Phone $phones) //Veifies that desired phone was created by the logged in user
     {
         // if($phone->user_id != Auth::id()){
         //     return abort(403);
         // }
 
-        $phones = Phone::with('brand')->paginate(5);
+        $phones = Phone::with('brand')->with('store')->paginate(5);
         $brands = Brand::all();
+        $stores = Store::all();
 
 
 
@@ -129,14 +130,14 @@ class PhoneController extends Controller
             'phone_image' => 'required',
             'name' => 'required',
             'brand_id' => 'required',
-            'specs' => 'required'
+            'specs' => 'required',
         ]);
 
         $phone->update([
             'phone_image' => $request->phone_image,
             'name' => $request->name,
             'brand_id' => $request->brand_id,
-            'specs' => $request->specs
+            'specs' => $request->specs,
         ]);
 
         return to_route('admin.phones.show', $phone)->with('success', 'Phone Updated successfully');

@@ -9,7 +9,7 @@ class Phone extends Model
 {
     use HasFactory;
 
-    protected $guarded =[];
+    protected $guarded = [];
 
     public function getRouteKeyName()
     {
@@ -21,7 +21,8 @@ class Phone extends Model
         return $this->belongsTo(Brand::class);
     }
 
-    public function stores(){
+    public function stores()
+    {
         return $this->belongsToMany(Store::class)->withTimestamps();
     }
 }
