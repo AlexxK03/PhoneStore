@@ -129,8 +129,13 @@ class StoreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Store $store)
     {
-        //
+        $user = Auth::user();
+        $user->authorizeRoles('admin');
+
+        $store->delete(); // deletes phone from database
+
+        return to_route('admin.stores.index');
     }
 }
