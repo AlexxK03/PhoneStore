@@ -55,7 +55,7 @@ class PhoneController extends Controller
             'brand_id' => 'required',
             'specs' => 'required',
             'phone_image' => 'file|image',
-            'stores' => ['required', 'exists:stores,id']
+            // 'stores' => ['required', 'exists:stores,id']
         ]);
 
         $phone_image = $request->file('phone_image'); //declare phone image variable and what file to look in
@@ -98,27 +98,25 @@ class PhoneController extends Controller
         return view('admin.phones.show')->with('phone', $phone);
     }
 
-    public function edit(Phone $phones) //Veifies that desired phone was created by the logged in user
+    public function edit(Phone $phone) //Veifies that desired phone was created by the logged in user
     {
         // if($phone->user_id != Auth::id()){
         //     return abort(403);
         // }
+        // $phones = Phone::with('brand')->with('stores')->paginate(5);
 
-        $phones = Phone::with('brand')->with('store')->paginate(5);
-        $brands = Brand::all();
-        $stores = Store::all();
-
-
+        // $stores = Store::all();
 
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
-        return view('admin.phones.edit')->with('brand', $brands)->with('phone', $phones);
+        $brand = Brand::all();
+
+        return view('admin.phones.edit')->with('brand', $brand)->with('phone', $phone);
     }
 
-    public function update(Request $request, Phone $phone)
+    public function update(Request $request,     Phone $phone)
     {
-
         $user = Auth::user();
         $user->authorizeRoles('admin');
 
@@ -126,18 +124,32 @@ class PhoneController extends Controller
         //     return abort(403);
         // }
 
+
         $request->validate([
-            'phone_image' => 'required',
+          //  'phone_image' => 'file|image',
             'name' => 'required',
             'brand_id' => 'required',
             'specs' => 'required',
         ]);
 
+        $phone_image = $request->file('phone_image'); //declare phone image variable and what file to look in
+
+        $extention = $phone_image->getClientOriginalExtension(); // returns file extension name (jpg, png etc.) from file name
+
+        $filename = date('d-m-Y') . '_' . $request->input('name') . '.' . $extention; //declares file name variable and format of file name to be displyed for images
+
+        $path = $phone_image->storeAs('public/images', $filename); // declares path and where to store images
+
+
+
         $phone->update([
-            'phone_image' => $request->phone_image,
+            'phone_image' => $filename,
             'name' => $request->name,
             'brand_id' => $request->brand_id,
             'specs' => $request->specs,
+            'uuid' => Str::uuid(),
+            'user_id' => Auth::id(),
+            'updated_at' =>now()
         ]);
 
         return to_route('admin.phones.show', $phone)->with('success', 'Phone Updated successfully');

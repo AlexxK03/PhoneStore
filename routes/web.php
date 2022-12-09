@@ -43,4 +43,4 @@ Route::resource('/user/brands', UserBrandController::class)->middleware(['auth']
 
 Route::resource('/admin/stores', AdminStoreController::class)->middleware(['auth'])->names('admin.stores');
 
-Route::resource('/user/stores', UserStoreController::class)->middleware(['auth'])->names('user.stores');
+// Route::resource('/user/stores', UserStoreController::class)->middleware(['auth'])->names('user.stores');

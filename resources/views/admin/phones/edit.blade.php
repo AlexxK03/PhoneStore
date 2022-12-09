@@ -8,11 +8,12 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="my-6 p-6 bg-white border-b border-gray-200 shadow-sm sm:rounded-lg">
-                <form action="{{ route('admin.phones.update', $phone) }}" method="post">
+                <form action="{{ route('admin.phones.update', $phone) }}" method="post" enctype="multipart/form-data">
                     @method('put')
                     @csrf
 
                     {{-- text input field component and attributes for the name field --}}
+
 
                     <p><strong>Name: </strong></p>
                     <x-text-input type="text" name="name" field="name" placeholder="name" class="w-full"
@@ -50,8 +51,7 @@
                         <label for="brand">Brand:</label>
                         <select name="brand_id">
                             @foreach ($brand as $brand)
-                                <option value="@old{{ $brand->id }}"
-                                    {{ old('brand_id') == $brand->id ? 'selected' : '' }}>
+                                <option value="{{ $brand->id }}">
                                     {{ $brand->name }}</option>
                             @endforeach
                         </select>
